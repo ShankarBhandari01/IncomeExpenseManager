@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "351883602697",
+    "project_id": "incomeexpenseapp-2024",
+    "storage_bucket": "incomeexpenseapp-2024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351883602697:android:f576106a6f7496272b41d8",
+        "android_client_info": {
+          "package_name": "com.example.incomeexpensemanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351883602697-mbs3te2cm5iikkh35un8b2jv8invl049.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.incomeexpensemanager",
+            "certificate_hash": "1ae3d064f412995b1548dc061c2355996f3c8d15"
+          }
+        },
+        {
+          "client_id": "351883602697-07d6ltb5jrjds40ini4spvvkl6406vib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFfcdPvkiiwPRpwfS8Nrh0pIXX89Vq8rc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351883602697-07d6ltb5jrjds40ini4spvvkl6406vib.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

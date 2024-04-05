@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Income Expense Manager</string>
+    <string name="ui_mode">UI Mode</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="success_saved">Updated saved successfully</string>
+    <string name="text_total_balance">Total Balance</string>
+    <string name="text_total_income">Total Income</string>
+    <string name="text_total_expense">Total Expense</string>
+    <string name="text_recent_transactions">Recent Transactions</string>
+    <string name="text_transaction_empty_title">No Transaction Yet!</string>
+    <string name="text_title">Title</string>
+    <string name="text_about">About</string>
+    <string name="text_filter">Filter</string>
+    <string name="text_edit">Edit</string>
+    <string name="text_createdAt">Created At</string>
+
+    <string name="text_save_transaction">Save Transaction</string>
+    <string name="text_expense_when">When</string>
+    <string name="text_expense_amount">Amount</string>
+    <string name="text_expense_transaction_type">Transaction type</string>
+    <string name="text_expense_tag">Tag</string>
+    <string name="text_expense_note">Note</string>
+    <string name="text_expense_add_transaction">Save Transaction</string>
+    <string name="text_expense_rupees">रु</string>
+    <string name="success_expense_saved">Transaction saved successfully</string>
+    <string name="success_transaction_delete">Transaction deleted successfully!</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="text_undo">Undo</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="verify">Verify</string>
+    <string name="_0">0</string>
+    <string name="enter_the_otp_here">Enter the Otp Here</string>
+
+</resources>

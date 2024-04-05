@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Income Expense Manager</string>
+    <string name="ui_mode">UI Mode</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="verify">Verify</string>
+    <string name="_0">0</string>
+    <string name="enter_the_otp_here">Enter the Otp Here</string>
+</resources>

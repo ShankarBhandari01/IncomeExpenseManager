@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFFFF</color>
+    <color name="colorLightGray">#DBDADA</color>
+    <color name="colorSuccess">#3AA33E</color>
+    <color name="colorInfo">#2089DD</color>
+    <color name="colorWarning">#BB9525</color>
+    <color name="colorError">#EB3829</color>
+    <color name="edit_text_color">#FFD6CF</color>
+    <color name="surface">#1A191E</color>
+    <color name="background">#121212</color>
+    <color name="income">#6FCF97</color>
+    <color name="expense">#EB5757</color>
+    <color name="blue_500">#4F9BFF</color>
+</resources>
+
+
