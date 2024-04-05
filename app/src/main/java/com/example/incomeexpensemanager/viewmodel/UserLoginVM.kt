@@ -94,4 +94,17 @@ class UserLoginVM @Inject constructor(
     fun deleteTransaction(transaction: Transaction) = viewModelScope.launch {
         loginRepo.delete(transaction)
     }
+
+
+    fun allIncome() {
+        _transactionFilter.value = "Income"
+    }
+
+    fun allExpense() {
+        _transactionFilter.value = "Expense"
+    }
+
+    fun overall() {
+        _transactionFilter.value = "Overall"
+    }
 }

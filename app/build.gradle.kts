@@ -112,5 +112,6 @@ dependencies {
     implementation(libs.glide)
 
 
-    implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation(libs.circleimageview)
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

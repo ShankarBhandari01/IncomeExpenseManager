@@ -81,7 +81,12 @@ fun nepaliRupee(amount: Double): String {
     val formatedValue = format.format(amount)
     return if (formatedValue.contains("NPR")) {
         val nepaliCurrency = formatedValue.split("NPR")[1]
-        "रु $nepaliCurrency"
+        if (formatedValue.startsWith("-")) {
+            return "रु -$nepaliCurrency"
+        } else {
+            return "रु $nepaliCurrency"
+        }
+
     } else {
         formatedValue
     }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/idTVHead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="Pie Chart"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!--Ui component for our pie chart-->
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="@dimen/_260sdp"
+        android:layout_height="@dimen/_260sdp"
+        android:layout_below="@id/idTVHead"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pieChart"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="Income"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:drawableLeftCompat="@drawable/ic_income"
+            app:drawableTint="@color/income" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="Expense"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:drawableLeftCompat="@drawable/ic_expense"
+            app:drawableTint="@color/expense" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -134,17 +134,31 @@
                 app:layout_constraintTop_toBottomOf="@+id/cate_title"
                 tools:listitem="@layout/category_layout" />
 
-            <TextView
+            <Spinner
                 android:id="@+id/title_recent_transaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/lato_bold"
-                android:text="@string/text_recent_transactions"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:iconTint="@color/black"
+                android:title="@string/text_filter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recview" />
+
+
+            <include
+                android:id="@+id/graphs"
+                layout="@layout/graphs_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_recent_transaction" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/transaction_rv"
@@ -154,7 +168,7 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_recent_transaction"
+                app:layout_constraintTop_toBottomOf="@id/graphs"
                 tools:listitem="@layout/item_transaction_layout" />
 
             <ViewStub

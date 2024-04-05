@@ -19,7 +19,7 @@
             android:layout_marginTop="@dimen/_3sdp"
             android:layout_marginBottom="@dimen/_2sdp"
             android:contentDescription="TODO"
-            app:tint="@color/white" />
+            />
 
         <TextView
             android:id="@+id/title"
@@ -43,8 +43,7 @@
             android:background="@null"
             android:contentDescription="TODO"
             android:src="@drawable/ic_baseline_add"
-            android:visibility="gone"
-            app:tint="@color/white" />
+            android:visibility="gone" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
