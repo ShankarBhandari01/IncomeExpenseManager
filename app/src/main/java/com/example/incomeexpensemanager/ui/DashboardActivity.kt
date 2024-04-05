@@ -19,6 +19,7 @@ import com.example.incomeexpensemanager.databinding.ActivityDashboardBinding
 import com.example.incomeexpensemanager.databinding.AddTransactionBinding
 import com.example.incomeexpensemanager.model.Transaction
 import com.example.incomeexpensemanager.model.User
+import com.example.incomeexpensemanager.ui.adapter.CategoryAdaptor
 import com.example.incomeexpensemanager.ui.adapter.TransactionAdapter
 import com.example.incomeexpensemanager.utils.Constants
 import com.example.incomeexpensemanager.utils.SweetToast
@@ -42,6 +43,7 @@ class DashboardActivity : AppCompatActivity() {
     }
     private val viewModel by viewModels<UserLoginVM>()
     private lateinit var transactionAdapter: TransactionAdapter
+    private lateinit var categoryAdaptor: CategoryAdaptor
 
     companion object {
         lateinit var user: User
@@ -220,6 +222,12 @@ class DashboardActivity : AppCompatActivity() {
             adapter = transactionAdapter
             layoutManager = LinearLayoutManager(this@DashboardActivity)
         }
+        categoryAdaptor = CategoryAdaptor(Constants.transactionTags, this@DashboardActivity)
+        recview.apply {
+            adapter = categoryAdaptor
+        }
+
+        //
     }
 
     private fun onTransactionLoaded(list: List<Transaction>) =
@@ -272,6 +280,9 @@ class DashboardActivity : AppCompatActivity() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder,
             ): Boolean {
+                val fromPosition = viewHolder.adapterPosition
+                val toPosition = target.adapterPosition
+                transactionAdapter.notifyItemMoved(fromPosition, toPosition)
                 return true
             }
 
@@ -306,9 +317,36 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
+
+        val itemDragAndDrop = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,  // Drag directions
+            ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val fromPosition = viewHolder.adapterPosition
+                val toPosition = target.adapterPosition
+                categoryAdaptor.notifyItemMoved(fromPosition, toPosition)
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // Not used for drag and drop
+            }
+        }
+
+
         // attach swipe callback to rv
         ItemTouchHelper(itemTouchHelperCallback).apply {
             attachToRecyclerView(binding.transactionRv)
         }
+
+        ItemTouchHelper(itemDragAndDrop).apply {
+            attachToRecyclerView(binding.recview)
+        }
+
     }
 }

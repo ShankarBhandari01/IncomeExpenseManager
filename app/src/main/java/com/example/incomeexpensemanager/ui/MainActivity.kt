@@ -246,7 +246,6 @@ class MainActivity : AppCompatActivity() {
         ) {
             Utils.dismissProgressDialog()
             val intent = Intent(this@MainActivity, OTPActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("OTP", verificationId)
             intent.putExtra("resendToken", token)
             intent.putExtra("phoneNumber", number)

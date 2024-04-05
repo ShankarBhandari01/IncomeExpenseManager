@@ -44,20 +44,20 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/lato_bold"
                     android:singleLine="true"
-                    android:textColor="@color/black"
                     android:text="@{Utils.INSTANCE.getGreetingMessage()}"
+                    android:textColor="@color/black"
                     android:textSize="17sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/title"
-                    android:textColor="@color/black"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/lato_bold"
                     android:singleLine="true"
                     android:text="@{agent.name}"
+                    android:textColor="@color/black"
                     android:textSize="20sp" />
 
 
@@ -110,6 +110,31 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/cate_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:text="Category"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/total_income_expense_view" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/cate_title"
+                app:layout_constraintTop_toBottomOf="@+id/cate_title"
+                tools:listitem="@layout/category_layout" />
+
+            <TextView
                 android:id="@+id/title_recent_transaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -119,7 +144,7 @@
                 android:text="@string/text_recent_transactions"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/total_income_expense_view" />
+                app:layout_constraintTop_toBottomOf="@id/recview" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/transaction_rv"
