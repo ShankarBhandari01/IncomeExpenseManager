@@ -12,9 +12,13 @@ by implementing proper encryption measures.
 
 ## Development Approach:
 
-The development will follow the MVVM (Model-View-ViewModel) architecture pattern to ensure
+The development will follow the MVVM (Model-View-ViewModel) architecture pattern as well as hilt to ensure
 separation of concerns and maintainability. Tasks will be broken down into manageable components,
-estimated for man-hours, and assigned story points for efficient project management.
+estimated for man-hours, and assigned story points for efficient project management. The Architecture image 
+is presented below
+
+[![Model-View-ViewModel](https://www.google.com/url?sa=i&url=https%3A%2F%2Fjaydroid254.hashnode.dev%2Ffirebase-authentication-with-mvvm-and-hilt-part-i&psig=AOvVaw2fVIbKEXbjmbn4tAtZELrg&ust=1712482647437000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKjl2pGlrYUDFQAAAAAdAAAAABAQ)](Link)
+
 
 ---
 
