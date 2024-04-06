@@ -129,17 +129,17 @@ the Android application.
 ## Images of The App
 
 <p align="center">
-    <img src="docs/images/login.jpg" width="30%"/>
-    <img src="docs/images/siginWithGoogle.jpg.jpg" width="30%"/>
-    <img src="docs/images/otpscreen.jpg" width="30%"/>
-    <img src="docs/images/userupdate.jpg.png" width="30%"/>
-    <img src="docs/images/dashboard.jpg.png" width="30%"/>
-    <img src="docs/images/graphsection.jpg.jpg.png" width="30%"/>
-    <img src="docs/images/barchart.jpg.jpg.png" width="30%"/>
-    <img src="docs/images/profile.jpg" width="30%"/>
-    <img src="docs/images/setting.jpg.jpg" width="30%"/>
-    <img src="docs/images/addd%20transaction.jpg.jpg" width="30%"/>
-    <img src="docs/images/loading.jpg" width="30%"/>
-    <img src="docs/images/dashboardwhole.jpg.jpg" width="30%"/>
+    <img src="docs/images/login.jpg" width="30%" alt="login img"/>
+    <img src="docs/images/siginWithGoogle.jpg" width="30%" alt="sign with google"/>
+    <img src="docs/images/otpscreen.jpg" width="30%" alt="otp screen"/>
+    <img src="docs/images/userupdate.jpg" width="30%" alt="user details update"/>
+    <img src="docs/images/dashboard.jpg" width="30%" alt="dashboard"/>
+    <img src="docs/images/graphsection.jpg" width="30%" alt="graphs"/>
+    <img src="docs/images/barchart.jpg" width="30%" alt="barcharts"/>
+    <img src="docs/images/profile.jpg" width="30%" alt="profile"/>
+    <img src="docs/images/setting.jpg" width="30%" alt="setting"/>
+    <img src="docs/images/addtransaction.jpg" width="30%" alt="add transaction"/>
+    <img src="docs/images/loading.jpg" width="30%" alt="loader"/>
+    <img src="docs/images/dashboardwhole.jpg" width="30%" alt="dashboard whole"/>
 
 </p>
