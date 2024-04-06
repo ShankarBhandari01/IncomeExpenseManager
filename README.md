@@ -18,7 +18,7 @@ estimated for man-hours, and assigned story points for efficient project managem
 is presented below
 
 <p align="center">
- <img src="docs/images/mvvm.png" width="30%" alt="mvvm img"/>
+ <img src="docs/images/mvvm.png" width="70%" alt="mvvm img"/>
 </p>
 
 ---
