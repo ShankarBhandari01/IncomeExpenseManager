@@ -171,6 +171,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_recent_transaction" />
 
+            <TextView
+                android:id="@+id/transaction_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
+                android:text="Recent Transaction Lists"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/transaction_rv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewPager" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/transaction_rv"
@@ -183,17 +194,6 @@
                 app:layout_constraintTop_toBottomOf="@id/viewPager"
                 tools:listitem="@layout/item_transaction_layout" />
 
-            <ViewStub
-                android:id="@+id/emptyStateLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout="@layout/content_empty_state_layout"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

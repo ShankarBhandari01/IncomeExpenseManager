@@ -116,7 +116,7 @@ class BuildGraphs(private val data: List<Transaction>, private val context: Cont
         val barData = BarData(dataSet)
         val xAxis: XAxis = barChart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
-        xAxis.setCenterAxisLabels(true)
+        xAxis.setCenterAxisLabels(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.setGranularity(1F)
         xAxis.isGranularityEnabled = true

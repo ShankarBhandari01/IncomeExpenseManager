@@ -1,19 +1,27 @@
-
 # Project Management Artifacts and Story Planning
 
 ---
 
 ## Project Overview:
-The Android application aims to provide users with a convenient way to track their income and expenses. It will implement profile management functionalities, user authentication with multi-factor authentication mechanisms (MFAs), expense recording, categorization, and visualization of spending patterns using graphs or charts. Additionally, the application will prioritize security by implementing proper encryption measures.
+
+The Android application aims to provide users with a convenient way to track their income and
+expenses. It will implement profile management functionalities, user authentication with
+multi-factor authentication mechanisms (MFAs), expense recording, categorization, and visualization
+of spending patterns using graphs or charts. Additionally, the application will prioritize security
+by implementing proper encryption measures.
 
 ## Development Approach:
-The development will follow the MVVM (Model-View-ViewModel) architecture pattern to ensure separation of concerns and maintainability. Tasks will be broken down into manageable components, estimated for man-hours, and assigned story points for efficient project management.
+
+The development will follow the MVVM (Model-View-ViewModel) architecture pattern to ensure
+separation of concerns and maintainability. Tasks will be broken down into manageable components,
+estimated for man-hours, and assigned story points for efficient project management.
 
 ---
 
 ## User Stories and Tasks:
 
 ### 1. Profile Management and User Authentication:
+
 - **User Story:**
   As a user, I want to be able to create and manage my profile securely.
 - **Tasks:**
@@ -23,6 +31,7 @@ The development will follow the MVVM (Model-View-ViewModel) architecture pattern
     - Ensure proper encryption and storage of user credentials.
 
 ### 2. Expense Recording:
+
 - **User Story:**
   As a user, I want to record my expenses easily and efficiently.
 - **Tasks:**
@@ -31,6 +40,7 @@ The development will follow the MVVM (Model-View-ViewModel) architecture pattern
     - Implement logic to store recorded expenses securely.
 
 ### 3. Expense Categorization:
+
 - **User Story:**
   As a user, I want to categorize my expenses to better understand my spending habits.
 - **Tasks:**
@@ -39,6 +49,7 @@ The development will follow the MVVM (Model-View-ViewModel) architecture pattern
     - Allow users to assign categories to recorded expenses.
 
 ### 4. Visualization of Spending Patterns:
+
 - **User Story:**
   As a user, I want to visualize my spending patterns using graphs or charts.
 - **Tasks:**
@@ -47,6 +58,7 @@ The development will follow the MVVM (Model-View-ViewModel) architecture pattern
     - Implement logic to fetch and process expense data for visualization.
 
 ### 5. Security Measures:
+
 - **User Story:**
   As a user, I want assurance that my sensitive information is encrypted and protected.
 - **Tasks:**
@@ -55,6 +67,7 @@ The development will follow the MVVM (Model-View-ViewModel) architecture pattern
     - Implement authentication and authorization checks for accessing sensitive functionalities.
 
 ### 6. UI Design and Theme Customization:
+
 - **User Story:**
   As a user, I want a visually appealing and customizable user interface.
 - **Tasks:**
@@ -62,6 +75,7 @@ The development will follow the MVVM (Model-View-ViewModel) architecture pattern
     - Implement theme customization options for users to personalize their experience.
 
 ### 7. Optional Features:
+
 - **User Story:**
   As a user, I want personalized recommendations or additional features to enhance my experience.
 - **Tasks:**
@@ -71,14 +85,17 @@ The development will follow the MVVM (Model-View-ViewModel) architecture pattern
 ---
 
 ## Time Estimation:
+
 - **Total Estimated Man-Hours:** 125 hours
 
 ### Story Points:
+
 - **Total Story Points:** 31 SP
 
 ---
 
 ## Project Flow:
+
 1. **Setup and Environment Configuration:** 5 SP
 2. **User Authentication and Profile Management:** 8 SP
 3. **Expense Recording and Categorization:** 8 SP
@@ -89,11 +106,13 @@ The development will follow the MVVM (Model-View-ViewModel) architecture pattern
 
 ---
 
-*Note: Story points and time estimations are approximate and subject to change based on project requirements.*
+*Note: Story points and time estimations are approximate and subject to change based on project
+requirements.*
 
 ---
 
 ## Repository Structure:
+
 - `docs/`: Contains project management artifacts and documentation.
 - `app/`: Android application source code.
 - `README.md`: Project overview and setup instructions.
@@ -101,4 +120,26 @@ The development will follow the MVVM (Model-View-ViewModel) architecture pattern
 
 ---
 
-This comprehensive plan outlines the project's objectives, tasks breakdown, time estimations, and story points allocation, providing a structured approach for efficient development and management of the Android application.
+This comprehensive plan outlines the project's objectives, tasks breakdown, time estimations, and
+story points allocation, providing a structured approach for efficient development and management of
+the Android application.
+
+--- 
+
+## Images of The App
+
+<p align="center">
+    <img src="docs/images/login.jpg" width="30%"/>
+    <img src="docs/images/siginWithGoogle.jpg.jpg" width="30%"/>
+    <img src="docs/images/otpscreen.jpg" width="30%"/>
+    <img src="docs/images/userupdate.jpg.png" width="30%"/>
+    <img src="docs/images/dashboard.jpg.png" width="30%"/>
+    <img src="docs/images/graphsection.jpg.jpg.png" width="30%"/>
+    <img src="docs/images/barchart.jpg.jpg.png" width="30%"/>
+    <img src="docs/images/profile.jpg" width="30%"/>
+    <img src="docs/images/setting.jpg.jpg" width="30%"/>
+    <img src="docs/images/addd%20transaction.jpg.jpg" width="30%"/>
+    <img src="docs/images/loading.jpg" width="30%"/>
+    <img src="docs/images/dashboardwhole.jpg.jpg" width="30%"/>
+
+</p>

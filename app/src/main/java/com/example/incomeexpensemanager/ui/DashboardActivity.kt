@@ -206,9 +206,6 @@ class DashboardActivity : AppCompatActivity() {
         transactionRv.show()
     }
 
-    private fun hideAllViews() = with(binding) {
-        dashboardGroup.hide()
-    }
 
     private fun setupRV() = with(binding) {
         transactionAdapter = TransactionAdapter()
@@ -258,7 +255,6 @@ class DashboardActivity : AppCompatActivity() {
                     }
 
                     is UiState.Empty -> {
-                        hideAllViews()
                     }
                 }
             }
