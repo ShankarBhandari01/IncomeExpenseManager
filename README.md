@@ -21,6 +21,40 @@ is presented below
  <img src="docs/images/mvvm.png" width="70%" alt="mvvm img"/>
 </p>
 
+ ### Tools and Technology:
+  In the development of our Android application, I leverage a variety of tools and technologies to ensure efficiency, 
+  reliability, and scalability. Here's a brief overview of the key components:
+
+**Kotlin Flow:**
+Kotlin Flow is a reactive streams library that provides a seamless way to handle asynchronous data streams in a structured and efficient manner. 
+It allows us to handle data asynchronously and reactively, facilitating the implementation of features such as real-time updates and data processing pipelines.
+
+**Kotlin Coroutines:**
+Kotlin Coroutines are lightweight threads that simplify asynchronous programming in Kotlin. 
+They enable us to write asynchronous code in a sequential and straightforward manner, 
+making it easier to manage complex asynchronous tasks such as network requests, database operations, and background processing.
+
+**Room Database:**
+Room is a SQLite object mapping library that provides an abstraction layer over SQLite databases 
+in Android applications. It allows us to define and interact with database entities using simple annotations, 
+reducing boilerplate code and providing type-safe access to database operations.
+
+**DataStore:**
+DataStore is a modern data storage solution from Jetpack that 
+allows us to store key-value pairs or typed objects asynchronously, 
+with built-in support for data migration and observing changes. 
+It provides a more efficient and flexible alternative to SharedPreferences 
+for storing app preferences and small amounts of app data.
+
+**Firebase Authentication:**
+Firebase Authentication is a robust authentication solution provided by Google Firebase, offering support for various authentication methods such as email/password, phone number, social media login, and multi-factor authentication (MFA). It provides secure user authentication and integrates seamlessly with other Firebase services.
+
+**MVVM Architecture:**
+MVVM (Model-View-ViewModel) is an architectural pattern that separates the presentation layer from the business logic and data model in Android applications. It promotes a clear separation of concerns, making it easier to maintain and test the codebase. ViewModel acts as a bridge between the View and the data, while LiveData or Kotlin Flow is used to propagate changes in the data to the View.
+
+**Hilt:**
+Hilt is a dependency injection library built on top of Dagger 2 that simplifies the implementation of dependency injection in Android apps. It provides a standard way to manage dependencies and facilitates testing and modularization. With Hilt, we can achieve a clear and maintainable dependency graph in our application, enhancing its scalability and testability.
+
 ---
 
 ## User Stories and Tasks:
