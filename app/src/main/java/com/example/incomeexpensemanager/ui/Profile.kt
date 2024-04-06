@@ -35,14 +35,22 @@ class Profile : AppCompatActivity() {
         binding.tvEmail.text = user.email
         binding.backBtn.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.logoutLayout.setOnClickListener {
-            auth.signOut()
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-            this.finish()
+            logout()
         }
+        binding.settingBtn.setOnClickListener {
+            startActivity(Intent(this, SettingActivity::class.java))
+        }
+    }
+
+
+    private fun logout() {
+        auth.signOut()
+        val intent = Intent(this@Profile, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        return this@Profile.finish()
     }
 
     private fun setUpPic() = with(binding) {

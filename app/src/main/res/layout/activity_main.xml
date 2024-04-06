@@ -148,20 +148,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/forgotPassword" />
 
-
         <RelativeLayout
+            android:id="@+id/google_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/_21sdp"
             android:layout_marginVertical="@dimen/_21sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/login"
+            app:layout_constraintStart_toStartOf="@id/login"
             app:layout_constraintTop_toBottomOf="@id/login">
 
             <ImageView
-
                 android:id="@+id/google_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

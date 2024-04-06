@@ -21,8 +21,7 @@ class UserLoginVM @Inject constructor(
     private val loginRepo: LoginRepo,
     application: Application
 ) : BaseViewModel(application) {
-    private val _userDetailsState: MutableStateFlow<UiState<User>> =
-        MutableStateFlow(UiState.Loading)
+    private val _userDetailsState: MutableStateFlow<UiState<User>> = MutableStateFlow(UiState.Loading)
     val userDetailsState: StateFlow<UiState<User>> = _userDetailsState
 
     private val _transactionFilter = MutableStateFlow("Overall")

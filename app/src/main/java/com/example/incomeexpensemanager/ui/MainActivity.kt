@@ -3,7 +3,6 @@ package com.example.incomeexpensemanager.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -70,6 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         observeGetUser()
         loginUser()
+        if (observeGetUser().isCompleted) observeGetUser().cancel()
 
     }
 
@@ -170,34 +170,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeGetUser() { lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.userDetailsState.collect { uiState ->
-                    when (uiState) {
-                        is UiState.Loading -> {
-                        }
+    private fun observeGetUser() = lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.CREATED) {
+            viewModel.userDetailsState.collect { uiState ->
+                when (uiState) {
+                    is UiState.Loading -> {
+                    }
 
-                        is UiState.Success -> {
-                            Utils.showProgressDialog(
-                                "Sending OTP verification, Please wait ",
-                                this@MainActivity
-                            )
-                            Timber.tag("User").e(Gson().toJson(uiState.data))
-                            sendOpt(uiState.data)
-                        }
+                    is UiState.Success -> {
+                        Utils.showProgressDialog(
+                            "Sending OTP verification, Please wait ",
+                            this@MainActivity
+                        )
+                        Timber.tag("User").e(Gson().toJson(uiState.data))
+                        sendOpt(uiState.data)
+                    }
 
-                        is UiState.Error -> {
-                            SweetToast.error(this@MainActivity, uiState.message)
-                        }
+                    is UiState.Error -> {
+                        SweetToast.error(this@MainActivity, uiState.message)
+                    }
 
-                        is UiState.Empty -> {
+                    is UiState.Empty -> {
 
-                        }
                     }
                 }
             }
         }
     }
+
 
     private fun sendOpt(user: User) {
         this.user = user
@@ -205,10 +205,10 @@ class MainActivity : AppCompatActivity() {
             if (user.phoneNumber!!.length == 10) {
                 number = "+977${user.phoneNumber}"
                 val options = PhoneAuthOptions.newBuilder(auth)
-                    .setPhoneNumber(number)       // Phone number to verify
-                    .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                    .setActivity(this@MainActivity)                 // Activity (for callback binding)
-                    .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
+                    .setPhoneNumber(number)
+                    .setTimeout(60L, TimeUnit.SECONDS)
+                    .setActivity(this@MainActivity)
+                    .setCallbacks(callbacks)
                     .build()
                 PhoneAuthProvider.verifyPhoneNumber(options)
 
@@ -251,11 +251,13 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("phoneNumber", number)
             intent.putExtra("user", user)
             startActivity(intent)
+            this@MainActivity.finishAffinity()
         }
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         auth.signInWithCredential(credential).addOnCompleteListener(this) { task ->
+            Utils.dismissProgressDialog()
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
                 SweetToast.success(this@MainActivity, "Authenticate Successfully")
@@ -273,6 +275,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sendToMain() {
+        Utils.dismissProgressDialog()
         startActivity(DashboardActivity.getIntent(this, user))
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         this.finish()

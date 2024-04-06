@@ -30,5 +30,8 @@
     <string name="verify">Verify</string>
     <string name="_0">0</string>
     <string name="enter_the_otp_here">Enter the Otp Here</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="slide_to_barchart">Slide to barchart</string>
 
 </resources>

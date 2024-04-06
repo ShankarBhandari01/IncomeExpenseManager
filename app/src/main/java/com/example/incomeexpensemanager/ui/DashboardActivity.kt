@@ -3,8 +3,6 @@ package com.example.incomeexpensemanager.ui
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -25,17 +23,12 @@ import com.example.incomeexpensemanager.databinding.AddTransactionBinding
 import com.example.incomeexpensemanager.model.Transaction
 import com.example.incomeexpensemanager.model.User
 import com.example.incomeexpensemanager.ui.adapter.CategoryAdaptor
+import com.example.incomeexpensemanager.ui.adapter.CustomPagerAdapter
 import com.example.incomeexpensemanager.ui.adapter.TransactionAdapter
 import com.example.incomeexpensemanager.utils.Constants
 import com.example.incomeexpensemanager.utils.SweetToast
 import com.example.incomeexpensemanager.utils.UiState
 import com.example.incomeexpensemanager.viewmodel.UserLoginVM
-import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.MPPointF
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,6 +39,7 @@ import parseDouble
 import show
 import transformIntoDatePicker
 import java.util.Date
+import kotlin.math.abs
 
 @AndroidEntryPoint
 class DashboardActivity : AppCompatActivity() {
@@ -150,11 +144,11 @@ class DashboardActivity : AppCompatActivity() {
 
                         else -> {
                             viewModel.insertTransaction(getTransactionContent(dialogbinding)).run {
-                                    SweetToast.success(
-                                        this@DashboardActivity, getString(R.string.add_transaction)
-                                    )
-                                    dialog.dismiss()
-                                }
+                                SweetToast.success(
+                                    this@DashboardActivity, getString(R.string.add_transaction)
+                                )
+                                dialog.dismiss()
+                            }
                         }
                     }
                 }
@@ -227,7 +221,9 @@ class DashboardActivity : AppCompatActivity() {
             adapter = categoryAdaptor
         }
 
-        //
+        transactionAdapter.setOnItemClickListener {
+            startActivity(TransactionDetailsActivity.getIntent(this@DashboardActivity, it))
+        }
     }
 
     private fun onTransactionLoaded(list: List<Transaction>) =
@@ -253,7 +249,7 @@ class DashboardActivity : AppCompatActivity() {
                     is UiState.Success -> {
                         showAllViews()
                         onTransactionLoaded(uiState.data)
-                        setUpPieChart(uiState.data)
+                        setUpCharts(uiState.data)
                         onTotalTransactionLoaded(uiState.data)
                     }
 
@@ -307,13 +303,13 @@ class DashboardActivity : AppCompatActivity() {
                     getString(R.string.success_transaction_delete),
                     Snackbar.LENGTH_LONG
                 ).apply {
-                        setAction(getString(R.string.text_undo)) {
-                            viewModel.insertTransaction(
-                                transactionItem
-                            )
-                        }
-                        show()
+                    setAction(getString(R.string.text_undo)) {
+                        viewModel.insertTransaction(
+                            transactionItem
+                        )
                     }
+                    show()
+                }
             }
         }
 
@@ -353,7 +349,9 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun setUpSpinner() = with(binding) {
         val adapter = ArrayAdapter.createFromResource(
-            this@DashboardActivity, R.array.allFilters, R.layout.item_filter_dropdown
+            this@DashboardActivity,
+            R.array.allFilters,
+            R.layout.item_filter_dropdown
         )
         adapter.setDropDownViewResource(R.layout.item_filter_dropdown)
         titleRecentTransaction.adapter = adapter
@@ -363,28 +361,31 @@ class DashboardActivity : AppCompatActivity() {
                 override fun onItemSelected(
                     parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
-                    lifecycleScope.launch {
-                        lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                            when (position) {
-                                0 -> {
-                                    viewModel.overall()
-                                    (view as TextView).setTextColor(resources.getColor(R.color.black))
-                                }
+                    if (view != null) {
+                        lifecycleScope.launch {
+                            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                                when (position) {
+                                    0 -> {
+                                        viewModel.overall()
+                                        (view as TextView).setTextColor(resources.getColor(R.color.black))
+                                    }
 
-                                1 -> {
-                                    viewModel.allIncome()
-                                    (view as TextView).setTextColor(resources.getColor(R.color.black))
-                                }
+                                    1 -> {
+                                        viewModel.allIncome()
+                                        (view as TextView).setTextColor(resources.getColor(R.color.black))
+                                    }
 
-                                2 -> {
-                                    viewModel.allExpense()
-                                    (view as TextView).setTextColor(resources.getColor(R.color.black))
+                                    2 -> {
+                                        viewModel.allExpense()
+                                        (view as TextView).setTextColor(resources.getColor(R.color.black))
+                                    }
                                 }
                             }
-                        }
 
+                        }
                     }
                 }
+
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     lifecycleScope.launch {
@@ -398,72 +399,18 @@ class DashboardActivity : AppCompatActivity() {
     }
 
 
-    private fun setUpPieChart(data: List<Transaction>) = with(binding.graphs) {
-        pieChart.setUsePercentValues(true)
-        pieChart.description.isEnabled = false
-        pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
-        pieChart.setDragDecelerationFrictionCoef(0.95f)
-        pieChart.isDrawHoleEnabled = true
-        pieChart.setHoleColor(Color.WHITE)
-
-        pieChart.setTransparentCircleColor(Color.WHITE)
-        pieChart.setTransparentCircleAlpha(110)
-        pieChart.holeRadius = 40f // Set the hole radius (adjust as needed)
-        pieChart.transparentCircleRadius =
-            35f // Set the transparent circle radius (adjust as needed)
-        pieChart.setDrawCenterText(true)
-        pieChart.setRotationAngle(0f)
-        pieChart.isRotationEnabled = true
-        pieChart.isHighlightPerTapEnabled = true
-        pieChart.animateY(1400, Easing.EaseInOutQuad)
-
-        pieChart.legend.isEnabled = false
-        pieChart.setEntryLabelColor(Color.WHITE)
-        pieChart.setEntryLabelTextSize(12f)
-
-        // Transform transaction data into PieEntry objects
-        val entries: ArrayList<PieEntry> = ArrayList()
-        var totalIncome = 0.0
-        var totalExpense = 0.0
-
-        for (transaction in data) {
-            if (transaction.amount >= 0 && transaction.transactionType.equals("Income", true)) {
-                totalIncome += transaction.amount
-            } else {
-                totalExpense += transaction.amount
+    private fun setUpCharts(dataset: List<Transaction>) = with(binding) {
+        val pagerAdaptor = CustomPagerAdapter(this@DashboardActivity, dataset)
+        viewPager.adapter = pagerAdaptor
+        binding.viewPager.setPageTransformer { page, position ->
+            val absPosition = abs(position)
+            page.apply {
+                // Fade the page out when it is not visible
+                alpha = 1f - absPosition
+                // Scale the page down slightly when it is not visible
+                scaleX = 0.75f + (1f - absPosition) * 0.25f
+                scaleY = 0.75f + (1f - absPosition) * 0.25f
             }
         }
-
-        entries.add(PieEntry(totalIncome.toFloat(), "Income"))
-        entries.add(PieEntry(totalExpense.toFloat(), "Expense"))
-
-        val dataSet = PieDataSet(entries, "Income vs Expense")
-        dataSet.setDrawIcons(false)
-
-        dataSet.sliceSpace = 3f
-        dataSet.iconsOffset = MPPointF(0f, 40f)
-        dataSet.selectionShift = 5f
-
-        val colors: ArrayList<Int> = ArrayList()
-        colors.add(resources.getColor(R.color.income))
-        colors.add(resources.getColor(R.color.expense))
-
-        dataSet.colors = colors
-
-        // Set pie chart data
-        val pieData = PieData(dataSet)
-        pieData.setValueFormatter(PercentFormatter())
-        pieData.setValueTextSize(15f)
-        pieData.setValueTypeface(Typeface.DEFAULT_BOLD)
-        pieData.setValueTextColor(Color.WHITE)
-        pieChart.data = pieData
-
-        // Undo all highlights
-        pieChart.highlightValues(null)
-
-        // Load chart
-        pieChart.invalidate()
     }
-
-
 }

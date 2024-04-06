@@ -1,5 +1,6 @@
 package com.example.incomeexpensemanager.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -192,7 +193,11 @@ class OTPActivity : AppCompatActivity() {
 
 
     private fun sendToMain() {
-        startActivity(DashboardActivity.getIntent(this, user))
+        startActivity(
+            DashboardActivity.getIntent(this, user)
+                .setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         this.finish()
     }

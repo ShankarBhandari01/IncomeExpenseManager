@@ -16,4 +16,6 @@
     <color name="blue_500">#006AF6</color>
     <color name="dark_blue">#32357A</color>
     <color name="light_blue">#F2F1F6</color>
+    <color name="settingBackGroundColor">#F2F2F2</color>
+    <color name="textColor">#696969</color>
 </resources>
