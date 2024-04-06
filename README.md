@@ -141,5 +141,8 @@ the Android application.
     <img src="docs/images/addtransaction.jpg" width="30%" alt="add transaction"/>
     <img src="docs/images/loading.jpg" width="30%" alt="loader"/>
     <img src="docs/images/dashboardwhole.jpg" width="30%" alt="dashboard whole"/>
+    <img src="docs/images/dark1.jpg" width="30%" alt="dashboard whole"/>
+    <img src="docs/images/dark2.jpg" width="30%" alt="dashboard whole"/>
+    <img src="docs/images/dark3.jpg" width="30%" alt="dashboard whole"/>
 
 </p>
