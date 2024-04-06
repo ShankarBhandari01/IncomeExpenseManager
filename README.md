@@ -17,8 +17,9 @@ separation of concerns and maintainability. Tasks will be broken down into manag
 estimated for man-hours, and assigned story points for efficient project management. The Architecture image 
 is presented below
 
-[![Model-View-ViewModel](https://cdn.hashnode.com/res/hashnode/image/upload/v1629135022442/aaertwEKK.png?auto=compress,format&format=webp)](https://www.google.com/url?sa=i&url=https%3A%2F%2Fjaydroid254.hashnode.dev%2Ffirebase-authentication-with-mvvm-and-hilt-part-i&psig=AOvVaw2fVIbKEXbjmbn4tAtZELrg&ust=1712482647437000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKjl2pGlrYUDFQAAAAAdAAAAABAQ)
-
+<p align="center">
+ <img src="docs/images/mvvm.png" width="30%" alt="mvvm img"/>
+</p>
 
 ---
 
