@@ -13,9 +13,6 @@ import nepaliRupee
 
 class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.TransactionVH>() {
 
-    inner class TransactionVH(val binding: ItemTransactionLayoutBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
     private val differCallback = object : DiffUtil.ItemCallback<Transaction>() {
         override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
             return oldItem.id == newItem.id
@@ -116,4 +113,6 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.TransactionVH
     fun setOnItemClickListener(listener: (Transaction) -> Unit) {
         onItemClickListener = listener
     }
+    inner class TransactionVH(val binding: ItemTransactionLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

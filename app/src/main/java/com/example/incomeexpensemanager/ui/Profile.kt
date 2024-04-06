@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.incomeexpensemanager.R
 import com.example.incomeexpensemanager.databinding.ActivityProfileBinding
 import com.example.incomeexpensemanager.model.User
+import com.example.incomeexpensemanager.utils.SweetToast
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,13 +45,18 @@ class Profile : AppCompatActivity() {
 
 
     private fun logout() {
-        auth.signOut()
-        val intent = Intent(this@Profile, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
-        return this@Profile.finish()
+        try {
+            auth.signOut()
+            val intent = Intent(this@Profile, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            return this@Profile.finish()
+        }catch (e:Exception){
+            e.localizedMessage?.let { SweetToast.error(this, it) }
+        }
+
     }
 
     private fun setUpPic() = with(binding) {

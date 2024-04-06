@@ -9,6 +9,7 @@ import com.example.incomeexpensemanager.databinding.BarchartLayoutBinding
 import com.example.incomeexpensemanager.databinding.GraphsLayoutBinding
 import com.example.incomeexpensemanager.model.Transaction
 import com.example.incomeexpensemanager.utils.BuildGraphs
+import com.example.incomeexpensemanager.utils.SweetToast
 
 class CustomPagerAdapter(private val context: Context, private val dataset: List<Transaction>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -24,24 +25,29 @@ class CustomPagerAdapter(private val context: Context, private val dataset: List
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val buildGraphs = BuildGraphs(dataset, context)
-        when (position) {
-            0 -> {
-                // Bind data or perform actions specific to the first view
-                val customViewHolder = holder as CustomViewHolder<GraphsLayoutBinding>
-                customViewHolder.binding.apply {
-                    buildGraphs.getPieChart(this)
+        try {
+            val buildGraphs = BuildGraphs(dataset, context)
+            when (position) {
+                0 -> {
+                    // Bind data or perform actions specific to the first view
+                    val customViewHolder = holder as CustomViewHolder<GraphsLayoutBinding>
+                    customViewHolder.binding.apply {
+                        buildGraphs.getPieChart(this)
+                    }
                 }
-            }
 
-            1 -> {
-                // Bind data or perform actions specific to the second view
-                val customViewHolder = holder as CustomViewHolder<BarchartLayoutBinding>
-                customViewHolder.binding.apply {
-                    buildGraphs.buildBarChart(this)
+                1 -> {
+                    // Bind data or perform actions specific to the second view
+                    val customViewHolder = holder as CustomViewHolder<BarchartLayoutBinding>
+                    customViewHolder.binding.apply {
+                        buildGraphs.buildBarChart(this)
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.localizedMessage?.let { SweetToast.error(context, it) }
         }
+
     }
 
 

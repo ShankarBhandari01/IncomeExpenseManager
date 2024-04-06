@@ -52,23 +52,27 @@ class OTPActivity : AppCompatActivity() {
 
 
         binding.verifyOTPBtn.setOnClickListener {
-            //collect otp from all the edit texts
-            val typedOTP =
-                (binding.otpEditText1.text.toString() + binding.otpEditText2.text.toString() + binding.otpEditText3.text.toString()
-                        + binding.otpEditText4.text.toString() + binding.otpEditText5.text.toString() + binding.otpEditText6.text.toString())
+            try {
+                //collect otp from all the edit texts
+                val typedOTP =
+                    (binding.otpEditText1.text.toString() + binding.otpEditText2.text.toString() + binding.otpEditText3.text.toString()
+                            + binding.otpEditText4.text.toString() + binding.otpEditText5.text.toString() + binding.otpEditText6.text.toString())
 
-            if (typedOTP.isNotEmpty()) {
-                if (typedOTP.length == 6) {
-                    val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(
-                        OTP, typedOTP
-                    )
-                    Utils.showProgressDialog("Verifying OTP,Please wait", this)
-                    signInWithPhoneAuthCredential(credential)
+                if (typedOTP.isNotEmpty()) {
+                    if (typedOTP.length == 6) {
+                        val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(
+                            OTP, typedOTP
+                        )
+                        Utils.showProgressDialog("Verifying OTP,Please wait", this)
+                        signInWithPhoneAuthCredential(credential)
+                    } else {
+                        Toast.makeText(this, "Please Enter Correct OTP", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                    Toast.makeText(this, "Please Enter Correct OTP", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Please Enter OTP", Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                Toast.makeText(this, "Please Enter OTP", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                e.localizedMessage?.let { it1 -> SweetToast.error(this@OTPActivity, it1) }
             }
 
 

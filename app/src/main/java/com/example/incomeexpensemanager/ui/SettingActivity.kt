@@ -5,8 +5,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
-import com.example.incomeexpensemanager.R
 import com.example.incomeexpensemanager.databinding.ActivitySettingBinding
+import com.example.incomeexpensemanager.utils.SweetToast
 import com.example.incomeexpensemanager.viewmodel.UserLoginVM
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -33,22 +33,27 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun observeThemeMode() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.getUIMode.collect {
-                val mode = when (it) {
-                    true -> {
-                        binding.swThemeSi.setChecked(true)
-                        AppCompatDelegate.MODE_NIGHT_YES
+        try {
+            lifecycleScope.launch(Dispatchers.Main) {
+                viewModel.getUIMode.collect {
+                    val mode = when (it) {
+                        true -> {
+                            binding.swThemeSi.setChecked(true)
+                            AppCompatDelegate.MODE_NIGHT_YES
+                        }
+
+                        false -> {
+                            binding.swThemeSi.setChecked(false)
+                            AppCompatDelegate.MODE_NIGHT_NO
+                        }
                     }
 
-                    false -> {
-                        binding.swThemeSi.setChecked(false)
-                        AppCompatDelegate.MODE_NIGHT_NO
-                    }
+                    AppCompatDelegate.setDefaultNightMode(mode)
                 }
-
-                AppCompatDelegate.setDefaultNightMode(mode)
             }
+        } catch (e: Exception) {
+            e.localizedMessage?.let { SweetToast.error(this, it) }
         }
+
     }
 }

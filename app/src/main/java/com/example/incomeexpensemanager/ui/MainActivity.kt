@@ -172,53 +172,63 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeGetUser() = lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.CREATED) {
-            viewModel.userDetailsState.collect { uiState ->
-                when (uiState) {
-                    is UiState.Loading -> {
-                    }
+            try {
+                viewModel.userDetailsState.collect { uiState ->
+                    when (uiState) {
+                        is UiState.Loading -> {
+                        }
 
-                    is UiState.Success -> {
-                        Utils.showProgressDialog(
-                            "Sending OTP verification, Please wait ",
-                            this@MainActivity
-                        )
-                        Timber.tag("User").e(Gson().toJson(uiState.data))
-                        sendOpt(uiState.data)
-                    }
+                        is UiState.Success -> {
+                            Utils.showProgressDialog(
+                                "Sending OTP verification, Please wait ",
+                                this@MainActivity
+                            )
+                            Timber.tag("User").e(Gson().toJson(uiState.data))
+                            sendOpt(uiState.data)
+                        }
 
-                    is UiState.Error -> {
-                        SweetToast.error(this@MainActivity, uiState.message)
-                    }
+                        is UiState.Error -> {
+                            SweetToast.error(this@MainActivity, uiState.message)
+                        }
 
-                    is UiState.Empty -> {
+                        is UiState.Empty -> {
 
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                e.localizedMessage?.let { SweetToast.error(this@MainActivity, it) }
             }
+
         }
     }
 
 
     private fun sendOpt(user: User) {
         this.user = user
-        if (user.phoneNumber?.isNotEmpty() == true) {
-            if (user.phoneNumber!!.length == 10) {
-                number = "+977${user.phoneNumber}"
-                val options = PhoneAuthOptions.newBuilder(auth)
-                    .setPhoneNumber(number)
-                    .setTimeout(60L, TimeUnit.SECONDS)
-                    .setActivity(this@MainActivity)
-                    .setCallbacks(callbacks)
-                    .build()
-                PhoneAuthProvider.verifyPhoneNumber(options)
+        try {
+            if (user.phoneNumber?.isNotEmpty() == true) {
+                if (user.phoneNumber!!.length == 10) {
+                    number = "+977${user.phoneNumber}"
+                    val options = PhoneAuthOptions.newBuilder(auth)
+                        .setPhoneNumber(number)
+                        .setTimeout(60L, TimeUnit.SECONDS)
+                        .setActivity(this@MainActivity)
+                        .setCallbacks(callbacks)
+                        .build()
+                    PhoneAuthProvider.verifyPhoneNumber(options)
 
+                } else {
+                    SweetToast.error(this@MainActivity, "Please Enter correct Number")
+
+                }
             } else {
-                SweetToast.error(this@MainActivity, "Please Enter correct Number")
-
+                SweetToast.error(this@MainActivity, "Please Enter Number")
             }
-        } else {
-            SweetToast.error(this@MainActivity, "Please Enter Number")
+        }catch (e:Exception){
+            e.localizedMessage?.let { SweetToast.error(this, it) }
         }
+
     }
 
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {

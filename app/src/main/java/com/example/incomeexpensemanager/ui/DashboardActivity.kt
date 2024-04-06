@@ -95,64 +95,74 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun initDialogViews(dialogbinding: AddTransactionBinding, dialog: Dialog) =
         with(dialogbinding) {
+            try {
+                val transactionTypeAdapter = ArrayAdapter(
+                    this@DashboardActivity,
+                    R.layout.item_autocomplete_layout,
+                    Constants.transactionType
+                )
+                val tagsAdapter = ArrayAdapter(
+                    this@DashboardActivity,
+                    R.layout.item_autocomplete_layout,
+                    Constants.transactionTags
+                )
 
-            val transactionTypeAdapter = ArrayAdapter(
-                this@DashboardActivity, R.layout.item_autocomplete_layout, Constants.transactionType
-            )
-            val tagsAdapter = ArrayAdapter(
-                this@DashboardActivity, R.layout.item_autocomplete_layout, Constants.transactionTags
-            )
+                // Set list to TextInputEditText adapter
+                addTransactionLayout.etTransactionType.setAdapter(transactionTypeAdapter)
+                addTransactionLayout.etTag.setAdapter(tagsAdapter)
 
-            // Set list to TextInputEditText adapter
-            addTransactionLayout.etTransactionType.setAdapter(transactionTypeAdapter)
-            addTransactionLayout.etTag.setAdapter(tagsAdapter)
+                // Transform TextInputEditText to DatePicker using Ext function
+                addTransactionLayout.etWhen.transformIntoDatePicker(
+                    this@DashboardActivity, "dd/MM/yyyy", Date()
+                )
+                btnSaveTransaction.setOnClickListener {
+                    dialogbinding.addTransactionLayout.apply {
+                        val (title, amount, transactionType, tag, date, note) = getTransactionContent(
+                            dialogbinding
+                        )
+                        // validate if transaction content is empty or not
+                        when {
+                            title.isEmpty() -> {
+                                this.etTitle.error = "Title must not be empty"
+                            }
 
-            // Transform TextInputEditText to DatePicker using Ext function
-            addTransactionLayout.etWhen.transformIntoDatePicker(
-                this@DashboardActivity, "dd/MM/yyyy", Date()
-            )
-            btnSaveTransaction.setOnClickListener {
-                dialogbinding.addTransactionLayout.apply {
-                    val (title, amount, transactionType, tag, date, note) = getTransactionContent(
-                        dialogbinding
-                    )
-                    // validate if transaction content is empty or not
-                    when {
-                        title.isEmpty() -> {
-                            this.etTitle.error = "Title must not be empty"
-                        }
+                            amount.isNaN() -> {
+                                this.etAmount.error = "Amount must not be empty"
+                            }
 
-                        amount.isNaN() -> {
-                            this.etAmount.error = "Amount must not be empty"
-                        }
+                            transactionType.isEmpty() -> {
+                                this.etTransactionType.error = "Transaction type must not be empty"
+                            }
 
-                        transactionType.isEmpty() -> {
-                            this.etTransactionType.error = "Transaction type must not be empty"
-                        }
+                            tag.isEmpty() -> {
+                                this.etTag.error = "Tag must not be empty"
+                            }
 
-                        tag.isEmpty() -> {
-                            this.etTag.error = "Tag must not be empty"
-                        }
+                            date.isEmpty() -> {
+                                this.etWhen.error = "Date must not be empty"
+                            }
 
-                        date.isEmpty() -> {
-                            this.etWhen.error = "Date must not be empty"
-                        }
+                            note.isEmpty() -> {
+                                this.etNote.error = "Note must not be empty"
+                            }
 
-                        note.isEmpty() -> {
-                            this.etNote.error = "Note must not be empty"
-                        }
-
-                        else -> {
-                            viewModel.insertTransaction(getTransactionContent(dialogbinding)).run {
-                                SweetToast.success(
-                                    this@DashboardActivity, getString(R.string.add_transaction)
-                                )
-                                dialog.dismiss()
+                            else -> {
+                                viewModel.insertTransaction(getTransactionContent(dialogbinding))
+                                    .run {
+                                        SweetToast.success(
+                                            this@DashboardActivity,
+                                            getString(R.string.add_transaction)
+                                        )
+                                        dialog.dismiss()
+                                    }
                             }
                         }
                     }
                 }
+            } catch (e: Exception) {
+                e.localizedMessage?.let { SweetToast.error(this@DashboardActivity, it) }
             }
+
 
         }
 
@@ -171,31 +181,38 @@ class DashboardActivity : AppCompatActivity() {
     private fun observeFilter() = with(binding) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.transactionFilter.collect { filter ->
-                    when (filter) {
-                        "Overall" -> {
-                            totalBalanceView.totalBalanceTitle.text =
-                                getString(R.string.text_total_balance)
-                            totalIncomeExpenseView.show()
-                            incomeCardView.totalTitle.text = getString(R.string.text_total_income)
-                            expenseCardView.totalTitle.text = getString(R.string.text_total_expense)
-                            expenseCardView.totalIcon.setImageResource(R.drawable.ic_expense)
-                        }
+                try {
+                    viewModel.transactionFilter.collect { filter ->
+                        when (filter) {
+                            "Overall" -> {
+                                totalBalanceView.totalBalanceTitle.text =
+                                    getString(R.string.text_total_balance)
+                                totalIncomeExpenseView.show()
+                                incomeCardView.totalTitle.text =
+                                    getString(R.string.text_total_income)
+                                expenseCardView.totalTitle.text =
+                                    getString(R.string.text_total_expense)
+                                expenseCardView.totalIcon.setImageResource(R.drawable.ic_expense)
+                            }
 
-                        "Income" -> {
-                            totalBalanceView.totalBalanceTitle.text =
-                                getString(R.string.text_total_income)
-                            totalIncomeExpenseView.hide()
-                        }
+                            "Income" -> {
+                                totalBalanceView.totalBalanceTitle.text =
+                                    getString(R.string.text_total_income)
+                                totalIncomeExpenseView.hide()
+                            }
 
-                        "Expense" -> {
-                            totalBalanceView.totalBalanceTitle.text =
-                                getString(R.string.text_total_expense)
-                            totalIncomeExpenseView.hide()
+                            "Expense" -> {
+                                totalBalanceView.totalBalanceTitle.text =
+                                    getString(R.string.text_total_expense)
+                                totalIncomeExpenseView.hide()
+                            }
                         }
+                        viewModel.getAllTransaction(filter)
                     }
-                    viewModel.getAllTransaction(filter)
+                } catch (e: Exception) {
+                    e.localizedMessage?.let { SweetToast.error(this@DashboardActivity, it) }
                 }
+
             }
 
         }
@@ -239,106 +256,115 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun observeTransaction() = lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.CREATED) {
-            viewModel.uiState.collect { uiState ->
-                when (uiState) {
-                    is UiState.Loading -> {}
+            try {
+                viewModel.uiState.collect { uiState ->
+                    when (uiState) {
+                        is UiState.Loading -> {}
 
-                    is UiState.Success -> {
-                        showAllViews()
-                        onTransactionLoaded(uiState.data)
-                        setUpCharts(uiState.data)
-                        onTotalTransactionLoaded(uiState.data)
-                    }
+                        is UiState.Success -> {
+                            showAllViews()
+                            onTransactionLoaded(uiState.data)
+                            setUpCharts(uiState.data)
+                            onTotalTransactionLoaded(uiState.data)
+                        }
 
-                    is UiState.Error -> {
-                        SweetToast.error(this@DashboardActivity, uiState.message)
-                    }
+                        is UiState.Error -> {
+                            SweetToast.error(this@DashboardActivity, uiState.message)
+                        }
 
-                    is UiState.Empty -> {
+                        is UiState.Empty -> {
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                e.localizedMessage?.let { SweetToast.error(this@DashboardActivity, it) }
             }
+
         }
 
     }
 
     private fun swipeToDelete() {
-        // init item touch callback for swipe action
-        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder,
-            ): Boolean {
-                val fromPosition = viewHolder.adapterPosition
-                val toPosition = target.adapterPosition
-                transactionAdapter.notifyItemMoved(fromPosition, toPosition)
-                return true
-            }
+        try {
+            // init item touch callback for swipe action
+            val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            ) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder,
+                ): Boolean {
+                    val fromPosition = viewHolder.adapterPosition
+                    val toPosition = target.adapterPosition
+                    transactionAdapter.notifyItemMoved(fromPosition, toPosition)
+                    return true
+                }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
-                val transaction = transactionAdapter.differ.currentList[position]
-                val transactionItem = Transaction(
-                    transaction.title,
-                    transaction.amount,
-                    transaction.transactionType,
-                    transaction.tag,
-                    transaction.date,
-                    transaction.note,
-                    transaction.createdAt,
-                    transaction.id
-                )
-                viewModel.deleteTransaction(transactionItem)
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val position = viewHolder.adapterPosition
+                    val transaction = transactionAdapter.differ.currentList[position]
+                    val transactionItem = Transaction(
+                        transaction.title,
+                        transaction.amount,
+                        transaction.transactionType,
+                        transaction.tag,
+                        transaction.date,
+                        transaction.note,
+                        transaction.createdAt,
+                        transaction.id
+                    )
+                    viewModel.deleteTransaction(transactionItem)
 
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.success_transaction_delete),
-                    Snackbar.LENGTH_LONG
-                ).apply {
-                    setAction(getString(R.string.text_undo)) {
-                        viewModel.insertTransaction(
-                            transactionItem
-                        )
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.success_transaction_delete),
+                        Snackbar.LENGTH_LONG
+                    ).apply {
+                        setAction(getString(R.string.text_undo)) {
+                            viewModel.insertTransaction(
+                                transactionItem
+                            )
+                        }
+                        show()
                     }
-                    show()
                 }
             }
-        }
 
+            val itemDragAndDrop = object : ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,  // Drag directions
+                ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
+            ) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    val fromPosition = viewHolder.adapterPosition
+                    val toPosition = target.adapterPosition
+                    categoryAdaptor.notifyItemMoved(fromPosition, toPosition)
+                    return true
+                }
 
-        val itemDragAndDrop = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,  // Drag directions
-            ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                val fromPosition = viewHolder.adapterPosition
-                val toPosition = target.adapterPosition
-                categoryAdaptor.notifyItemMoved(fromPosition, toPosition)
-                return true
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    // Not used for drag and drop
+                }
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                // Not used for drag and drop
+
+            // attach swipe callback to rv
+            ItemTouchHelper(itemTouchHelperCallback).apply {
+                attachToRecyclerView(binding.transactionRv)
             }
+
+            ItemTouchHelper(itemDragAndDrop).apply {
+                attachToRecyclerView(binding.recview)
+            }
+        } catch (e: Exception) {
+            e.localizedMessage?.let { SweetToast.error(this@DashboardActivity, it) }
         }
 
-
-        // attach swipe callback to rv
-        ItemTouchHelper(itemTouchHelperCallback).apply {
-            attachToRecyclerView(binding.transactionRv)
-        }
-
-        ItemTouchHelper(itemDragAndDrop).apply {
-            attachToRecyclerView(binding.recview)
-        }
 
     }
 
@@ -357,29 +383,34 @@ class DashboardActivity : AppCompatActivity() {
                 override fun onItemSelected(
                     parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
-                    if (view != null) {
-                        lifecycleScope.launch {
-                            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                                when (position) {
-                                    0 -> {
-                                        viewModel.overall()
-                                        (view as TextView).setTextColor(resources.getColor(R.color.black))
-                                    }
+                    try {
+                        if (view != null) {
+                            lifecycleScope.launch {
+                                lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                                    when (position) {
+                                        0 -> {
+                                            viewModel.overall()
+                                            (view as TextView).setTextColor(resources.getColor(R.color.black))
+                                        }
 
-                                    1 -> {
-                                        viewModel.allIncome()
-                                        (view as TextView).setTextColor(resources.getColor(R.color.black))
-                                    }
+                                        1 -> {
+                                            viewModel.allIncome()
+                                            (view as TextView).setTextColor(resources.getColor(R.color.black))
+                                        }
 
-                                    2 -> {
-                                        viewModel.allExpense()
-                                        (view as TextView).setTextColor(resources.getColor(R.color.black))
+                                        2 -> {
+                                            viewModel.allExpense()
+                                            (view as TextView).setTextColor(resources.getColor(R.color.black))
+                                        }
                                     }
                                 }
-                            }
 
+                            }
                         }
+                    } catch (e: Exception) {
+                        e.localizedMessage?.let { SweetToast.error(this@DashboardActivity, it) }
                     }
+
                 }
 
 
@@ -392,21 +423,26 @@ class DashboardActivity : AppCompatActivity() {
                     }
                 }
             }
+
+
     }
 
 
     private fun setUpCharts(dataset: List<Transaction>) = with(binding) {
-        val pagerAdaptor = CustomPagerAdapter(this@DashboardActivity, dataset)
-        viewPager.adapter = pagerAdaptor
-        binding.viewPager.setPageTransformer { page, position ->
-            val absPosition = abs(position)
-            page.apply {
-                // Fade the page out when it is not visible
-                alpha = 1f - absPosition
-                // Scale the page down slightly when it is not visible
-                scaleX = 0.75f + (1f - absPosition) * 0.25f
-                scaleY = 0.75f + (1f - absPosition) * 0.25f
+        try {
+            val pagerAdaptor = CustomPagerAdapter(this@DashboardActivity, dataset)
+            viewPager.adapter = pagerAdaptor
+            binding.viewPager.setPageTransformer { page, position ->
+                val absPosition = abs(position)
+                page.apply {
+                    alpha = 1f - absPosition
+                    scaleX = 0.75f + (1f - absPosition) * 0.25f
+                    scaleY = 0.75f + (1f - absPosition) * 0.25f
+                }
             }
+        } catch (e: Exception) {
+            e.localizedMessage?.let { SweetToast.error(this@DashboardActivity, it) }
         }
+
     }
 }
